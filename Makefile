@@ -52,7 +52,6 @@ ifneq ($(OFFLINE),)
 	make -C ../os clean
 	make -C user/ clean
 	cp -r ../os/. ../temp-os
-	cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse
 	cp -r user/* temp-user
 	cp -r user/.cargo temp-user
 	cp -r check/. temp-checker
