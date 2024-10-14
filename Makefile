@@ -47,17 +47,19 @@ backup:
 ifneq ($(OFFLINE),)
 # Save the original files
 	mkdir -p ../temp-os
-	mkdir -p ../temp-easy-fs-fuse
 	mkdir -p temp-user
 	mkdir -p temp-checker
 	make -C ../os clean
 	make -C user/ clean
-	cd ../easy-fs-fuse && cargo clean && cd ../ci-user
 	cp -r ../os/. ../temp-os
 	cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse
 	cp -r user/* temp-user
 	cp -r user/.cargo temp-user
 	cp -r check/. temp-checker
+	if [ -d "../easy-fs-fuse" ]; then \
+		mkdir -p ../temp-easy-fs-fuse ; \
+		cd ../easy-fs-fuse && cargo clean && cd ../ci-user
+	fi
 endif
 
 restore:
