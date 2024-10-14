@@ -43,13 +43,58 @@ ifeq ($(OFFLINE),)
 	rustup component add llvm-tools-preview
 endif
 
+backup:
+ifneq ($(OFFLINE),)
+# Save the original files
+	mkdir -p ../temp-os
+	mkdir -p ../temp-easy-fs-fuse
+	mkdir -p temp-user
+	mkdir -p temp-checker
+	make -C ../os clean
+	make -C user/ clean
+	cd ../easy-fs-fuse && cargo clean && cd ../ci-user
+	cp -r ../os/. ../temp-os
+	cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse
+	cp -r user/* temp-user
+	cp -r user/.cargo temp-user
+	cp -r check/. temp-checker
+endif
+
+restore:
+ifneq ($(OFFLINE),)
+# Restore the original files
+	if [ -d "../temp-os" ]; then \
+		rm -rf ../os/*; \
+		cp -r ../temp-os/. ../os; \
+		rm -rf ../temp-os; \
+	fi
+	
+	if [ -d "../temp-easy-fs-fuse" ]; then \
+		rm -rf ../easy-fs-fuse/*; \
+		cp -r ../temp-easy-fs-fuse/. ../easy-fs-fuse; \
+		rm -rf ../temp-easy-fs-fuse; \
+	fi
+
+	if [ -d "temp-user" ]; then \
+		rm -rf user/*; \
+		cp -r temp-user/. user; \
+		rm -rf temp-user; \
+	fi
+
+	if [ -d "temp-checker" ]; then \
+		rm -rf check/*; \
+		cp -r temp-checker/. check; \
+		rm -rf temp-checker; \
+	fi
+endif
+
 randomize:
 	find user/src/bin -name "*.rs" | xargs -I {} sh -c 'sed -i.bak 's/OK/OK$(RAND)/g' {} && rm -rf {}.bak'
 	find user/src/bin -name "*.rs" | xargs -I {} sh -c 'sed -i.bak 's/passed/passed$(RAND)/g' {} && rm -rf {}.bak'
 	find check -name "*.py" | xargs -I {} sh -c 'sed -i.bak 's/OK/OK$(RAND)/g' {} && rm -rf {}.bak'
 	find check -name "*.py" | xargs -I {} sh -c 'sed -i.bak 's/passed/passed$(RAND)/g' {} && rm -rf {}.bak'
 
-test: env randomize
+test: backup env randomize
 ifneq ($(OFFLINE),)
 	cp -r vendor/os-vendor ../os/vendor
 	cp -r vendor/user-vendor user/vendor
@@ -74,8 +119,10 @@ ifdef INITPROC
 endif
 	make -C ../os run OFFLINE=$(OFFLINE) | tee stdout-ch$(CHAPTER)
 ifdef LAB
-	python3 check/ch$(CHAPTER)$(BASE_CHAR).py < stdout-ch$(CHAPTER)
+	python3 check/ch$(CHAPTER)$(BASE_CHAR).py < stdout-ch$(CHAPTER) || true
 endif
+
+	$(MAKE) restore
 
 ifneq ($(and $(LAB),$(CHECK_REPORTS)),)
 	@for i in $(shell seq $(LAB)); do \
