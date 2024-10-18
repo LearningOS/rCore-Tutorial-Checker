@@ -132,7 +132,7 @@ ifneq ($(and $(LAB),$(CHECK_REPORTS)),)
 	@for i in $(shell seq $(LAB)); do \
 		if ! [ -f ../reports/lab$$i.pdf -o -f ../reports/lab$$i.md ]; then \
 			echo "Report for lab$$i needed. Add your report to reports/lab$$i.pdf or reports/lab$$i.md" ; \		
-			$(error Report needed. Add your report to reports/lab[Chapter].pdf or reports/lab[ID].md (replace [ID] with the order number of this chapter)); \
+			$(error Report needed. Add your report to reports/lab[ID].pdf or reports/lab[ID].md (replace [ID] with number[1-5]. e.g. ch3=lab1, ch4=lab2, ch5=lab3, ch6=lab4, ch8=lab5.)); \
 			exit 1 ; \
 		else \
 			echo "Report for lab$$i found." ; \
