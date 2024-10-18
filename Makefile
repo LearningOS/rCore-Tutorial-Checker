@@ -120,7 +120,10 @@ ifdef INITPROC
 endif
 	make -C ../os run OFFLINE=$(OFFLINE) | tee stdout-ch$(CHAPTER)
 ifdef LAB
-	python3 check/ch$(CHAPTER)$(BASE_CHAR).py < stdout-ch$(CHAPTER) || true
+	python3 check/ch$(CHAPTER)$(BASE_CHAR).py < stdout-ch$(CHAPTER) || (\
+		$(MAKE) restore ; \
+		exit 1 ; \
+	)
 endif
 
 	$(MAKE) restore
