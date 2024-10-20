@@ -57,7 +57,7 @@ ifneq ($(OFFLINE),)
 	cp -r check/. temp-checker
 	if [ -d "../easy-fs-fuse" ]; then \
 		mkdir -p ../temp-easy-fs-fuse ; \
-		cd ../easy-fs-fuse && cargo clean && cd ../ci-user
+		cd ../easy-fs-fuse && cargo clean && cd ../ci-user \
 	fi
 endif
 
