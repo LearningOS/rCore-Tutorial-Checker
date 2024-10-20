@@ -45,16 +45,17 @@ endif
 
 backup:
 # Save the original files
-	mkdir -p ../temp-os
-	mkdir -p temp-user
-	mkdir -p temp-checker
-	make -C ../os clean
-	make -C user/ clean
-	cp -r ../os/. ../temp-os
-	cp -r user/* temp-user
-	cp -r user/.cargo temp-user
-	cp -r check/. temp-checker
-	if [ -d "../easy-fs-fuse" ]; then \
+	@echo "Backing up original files to temp-* dirs"
+	@mkdir -p ../temp-os
+	@mkdir -p temp-user
+	@mkdir -p temp-checker
+	@make -C ../os clean
+	@make -C user/ clean
+	@cp -r ../os/. ../temp-os
+	@cp -r user/* temp-user
+	@cp -r user/.cargo temp-user
+	@cp -r check/. temp-checker
+	@if [ -d "../easy-fs-fuse" ]; then \
 		mkdir -p ../temp-easy-fs-fuse ; \
 		cd ../easy-fs-fuse && cargo clean && cd ../ci-user; \
 		cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse ; \
@@ -62,25 +63,26 @@ backup:
 
 restore:
 # Restore the original files
-	if [ -d "../temp-os" ]; then \
+	@echo "Restoring original files from temp-* dirs"
+	@if [ -d "../temp-os" ]; then \
 		rm -rf ../os/*; \
 		cp -r ../temp-os/. ../os; \
 		rm -rf ../temp-os; \
 	fi
 	
-	if [ -d "../temp-easy-fs-fuse" ]; then \
+	@if [ -d "../temp-easy-fs-fuse" ]; then \
 		rm -rf ../easy-fs-fuse; \
 		cp -r ../temp-easy-fs-fuse/. ../easy-fs-fuse; \
 		rm -rf ../temp-easy-fs-fuse; \
 	fi
 
-	if [ -d "temp-user" ]; then \
+	@if [ -d "temp-user" ]; then \
 		rm -rf user/*; \
 		cp -r temp-user/. user; \
 		rm -rf temp-user; \
 	fi
 
-	if [ -d "temp-checker" ]; then \
+	@if [ -d "temp-checker" ]; then \
 		rm -rf check/*; \
 		cp -r temp-checker/. check; \
 		rm -rf temp-checker; \
