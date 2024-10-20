@@ -44,7 +44,6 @@ ifeq ($(OFFLINE),)
 endif
 
 backup:
-ifneq ($(OFFLINE),)
 # Save the original files
 	mkdir -p ../temp-os
 	mkdir -p temp-user
@@ -60,10 +59,8 @@ ifneq ($(OFFLINE),)
 		cd ../easy-fs-fuse && cargo clean && cd ../ci-user; \
 		cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse ; \
 	fi
-endif
 
 restore:
-ifneq ($(OFFLINE),)
 # Restore the original files
 	if [ -d "../temp-os" ]; then \
 		rm -rf ../os/*; \
@@ -72,7 +69,7 @@ ifneq ($(OFFLINE),)
 	fi
 	
 	if [ -d "../temp-easy-fs-fuse" ]; then \
-		rm -rf ../easy-fs-fuse/*; \
+		rm -rf ../easy-fs-fuse; \
 		cp -r ../temp-easy-fs-fuse/. ../easy-fs-fuse; \
 		rm -rf ../temp-easy-fs-fuse; \
 	fi
@@ -88,7 +85,6 @@ ifneq ($(OFFLINE),)
 		cp -r temp-checker/. check; \
 		rm -rf temp-checker; \
 	fi
-endif
 
 randomize:
 	find user/src/bin -name "*.rs" | xargs -I {} sh -c 'sed -i.bak 's/OK/OK$(RAND)/g' {} && rm -rf {}.bak'
