@@ -58,6 +58,7 @@ ifneq ($(OFFLINE),)
 	if [ -d "../easy-fs-fuse" ]; then \
 		mkdir -p ../temp-easy-fs-fuse ; \
 		cd ../easy-fs-fuse && cargo clean && cd ../ci-user; \
+		cp -r ../easy-fs-fuse/. ../temp-easy-fs-fuse ; \
 	fi
 endif
 
