@@ -15,5 +15,7 @@ EXPECTED_3 = [
     "Test task info OK!",
 ]
 
+print(f"Expected: {EXPECTED_3}")
+
 if __name__ == "__main__":
     base.test(EXPECTED_3)
