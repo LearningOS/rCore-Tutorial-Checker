@@ -10,12 +10,10 @@ EXPECTED_3 = [
     r"time_msec = (\d+) after sleeping (\d+) ticks, delta = (\d+)ms!",
     "Test sleep1 passed!",
 
-    # ch3_taskinfo
-    "string from task info test",
-    "Test task info OK!",
+    # ch3_trace
+    "string from task trace test",
+    "Test trace OK!",
 ]
-
-print(f"Expected: {EXPECTED_3}")
 
 if __name__ == "__main__":
     base.test(EXPECTED_3)

@@ -15,8 +15,9 @@ EXPECTED_5 = EXPECTED_4 + [
 ]
 
 EXPECTED_5 = list(set(EXPECTED_5) - set([
-    "string from task info test",
-    "Test task info OK!",
+    "string from task trace test",
+    "Test trace OK!",
+    "Test trace_1 OK!",
 ]))
 
 if __name__ == "__main__":

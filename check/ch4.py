@@ -14,6 +14,9 @@ EXPECTED_4 = EXPECTED_3 + [
 
     # ch4_unmap2
     "Test 04_6 ummap2 OK!",
+
+    # ch4_trace1
+    "Test trace_1 OK!",
 ]
 
 NOT_EXPECTED_4 = NOT_EXPECTED_2b + [
