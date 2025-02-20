@@ -3,13 +3,8 @@ CHAPTER ?=
 OFFLINE :=
 # This is only for TAs to run base test, students do not know the token
 TOKEN_SHA1 := $(shell echo -n '$(passwd)' | sha1sum | xargs | awk -F' ' '{ print $$1 }')
-ifeq ($(TOKEN_SHA1), 1c22d32b04178593d7452f5eb5037bda00f73037)
-	BASE := 1
-	BASE_CHAR := b
-else
-	CHECK_REPORTS := 1
-	BASE := 2
-endif
+CHECK_REPORTS := 1
+BASE := 2
 
 # For students, report will be counted in to pass the CI
 ifeq ($(CHAPTER), 3)
