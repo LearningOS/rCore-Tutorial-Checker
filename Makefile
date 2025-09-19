@@ -3,7 +3,7 @@ CHAPTER ?=
 OFFLINE :=
 # This is only for TAs to run base test, students do not know the token
 TOKEN_SHA1 := $(shell echo -n '$(passwd)' | sha1sum | xargs | awk -F' ' '{ print $$1 }')
-ifeq ($(TOKEN_SHA1), 1c22d32b04178593d7452f5eb5037bda00f73037)
+ifeq ($(TOKEN_SHA1), c3a62f14a6602605715797a59bdd0b59abdd3c1d)
 	BASE := 1
 	BASE_CHAR := b
 else
