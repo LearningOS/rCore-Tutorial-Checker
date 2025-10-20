@@ -38,7 +38,7 @@ endif
 env:
 ifeq ($(OFFLINE),)
 	(rustup target list | grep "riscv64gc-unknown-none-elf (installed)") || rustup target add riscv64gc-unknown-none-elf
-	cargo install cargo-binutils
+	cargo install cargo-binutils --locked
 	rustup component add rust-src
 	rustup component add llvm-tools-preview
 endif
